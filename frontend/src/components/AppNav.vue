@@ -10,8 +10,8 @@
       </li>
     </ul>
     <div class="nav-actions">
-      <button class="btn-ghost">登录</button>
-      <button class="btn-primary">免费开始</button>
+      <button class="btn-ghost" @click="goToLogin">登录</button>
+      <button class="btn-primary" @click="goTORegister">免费开始</button>
     </div>
   </nav>
 </template>
@@ -45,5 +45,14 @@ const scrollTo = (href) =>{
             element.scrollIntoView({behavior:'smooth'});
         }
     })
+}
+
+//跳转登录页面
+const goToLogin =() =>{
+    router.push('/login')
+}
+//跳转到注册界面
+const goTORegister = () =>{
+    router.push('/register')
 }
 </script>

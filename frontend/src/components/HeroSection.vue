@@ -9,7 +9,7 @@
       <p>沉浸式的学习体验，像学母语一样自然。AI 智能匹配你的节奏，每天 15 分钟，轻松掌握新语言。</p>
       
       <div class="hero-buttons">
-        <button class="btn-primary btn-large">免费开始学习</button>
+        <button class="btn-primary btn-large" @click="goTORegister">免费开始学习</button>
         <button class="btn-outline">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
           观看介绍
@@ -75,6 +75,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import router from '@/router';//导入路由实例
 
 const stats = ref([
   { value: '500万+', label: '全球学习者' },
@@ -103,5 +104,9 @@ const options = ref([
 const selectOption = (option) => {
   options.value.forEach(o => o.selected = false);
   option.selected = true;
+
 };
+const goTORegister = () =>{
+    router.push('/register')
+}
 </script>

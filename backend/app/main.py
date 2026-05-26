@@ -1,6 +1,6 @@
 ﻿from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.api.endpoints import words,auth
+from app.api.endpoints import auth
 from app.db.session import engine
 from app.db.base import SQLModel
 
@@ -18,7 +18,6 @@ app.add_middleware(
 def on_startup():
     SQLModel.metadata.create_all(engine)
 
-app.include_router(words.router, prefix="/api")
 app.include_router(auth.router,prefix="/api")
 
 @app.get("/")

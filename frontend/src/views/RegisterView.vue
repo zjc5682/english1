@@ -1,7 +1,7 @@
 <template>
     <div class = "register-container">
         <h2>注册</h2>
-        <from @submit.prevent = "handleRegister">
+        <form @submit.prevent = "handleRegister">
             <div>
                 <label>用户名</label>
                 <input v-model = "form.username" type="text" required/>
@@ -18,7 +18,7 @@
             <button type = "submit":disabled="loading">
                 {{ loading?'注册中...':'注册' }}
             </button>
-        </from>>
+        </form>>
         <p>
             已有账号？
             <router-link to="/login">去登录</router-link>
