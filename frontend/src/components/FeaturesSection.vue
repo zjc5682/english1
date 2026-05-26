@@ -1,5 +1,5 @@
 <template>
-  <section class="features">
+  <section class="features" id="features">
     <div class="section-header">
       <div class="section-label">为什么选择我们</div>
       <h2>让学习变得自然而有效</h2>

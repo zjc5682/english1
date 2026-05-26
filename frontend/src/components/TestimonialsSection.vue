@@ -1,5 +1,5 @@
 <template>
-  <section class="testimonials">
+  <section class="testimonials" id="testimonials">
     <div class="section-header">
       <div class="section-label">用户评价</div>
       <h2>听听学习者怎么说</h2>

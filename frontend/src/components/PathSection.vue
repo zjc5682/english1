@@ -1,5 +1,5 @@
 <template>
-  <section class="learning-path">
+  <section class="learning-path" id="path">
     <div class="section-header">
       <div class="section-label">学习路径</div>
       <h2>从零到流利，我们为你规划好每一步</h2>

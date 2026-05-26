@@ -1,5 +1,5 @@
 <template>
-  <section class="languages">
+  <section class="languages" id="languages">
     <div class="section-header">
       <div class="section-label">热门语种</div>
       <h2>选择你想学习的语言</h2>
