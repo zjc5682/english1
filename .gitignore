@@ -8,6 +8,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.so
+*.pyc
+*.pyo
 
 # 忽略环境变量文件 (包含数据库密码，绝对不能上传！)
 .env
