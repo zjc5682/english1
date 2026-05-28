@@ -42,13 +42,17 @@ def register(user_in:UserCreate,session:Session = Depends(get_session)):
 
 @router.post("/login",response_model=Token)
 #定义登录函数，接受用户名和密码作为参数，并依赖注入一个数据库会话对象
-def login(username:str,password:str,session:Session = Depends(get_session)):
-    #允许用户登录
-    user = session.exec(select(User).where(User.username == username)).first()
-    if not user or not verify_password(password,user.hashed_password):
-        raise HTTPException(status_code=401,detail ="用户名或密码错误")#不具体提示，避免枚举攻击
-    access_token = create_access_token(data={"sub":user.username})#验证通过，生成JWT访问令牌，data={"sub": user.username}: 令牌的载荷（payload）
-    return {"access_token":access_token,"token_type":"bearer"}
+def login(credentials:UserCreate,session:Session = Depends(get_session)):
+    user = session.exec(
+        select(User).where(
+            (User.username == credentials.username) |(User.email == credentials.email)
+        )
+    ).first()#根据用户名或邮箱查询用户对象
+    if not user or not verify_password(credentials.password,user.hashed_password):
+        raise HTTPException(status_code=401,detail="用户名或密码错误")
+    access_token = create_access_token(data={"sub":user.username})#创建一个JWT访问令牌，包含用户的用户名作为主题
+    return{"access_token":access_token,"token_type":"bearer"}   #返回访问令牌和令牌类型，供前端使用
+
 
 #定义一个GET请求接口，路劲为/me，响应数据格式为UserRead
 @router.get("/me",response_model= UserRead)
