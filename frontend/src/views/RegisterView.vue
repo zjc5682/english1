@@ -276,14 +276,17 @@ const handleSubmit = async () => {
   loading.value = true
   errorMsg.value = ''
   
+  const payload ={
+    username:form.value.name,
+    email:form.value.email,
+    password:form.value.password
+  }
+
   try {
     // 调用 authStore 的注册方法
     // 注意：您的 store 接口参数需要对应，这里假设 register 接受一个对象
     await authStore.register(
-        form.value.name, // 将 name 映射为 username
-        form.value.email,
-        form.value.password
-      // language 可以根据后端需求决定是否发送
+        payload //传入对象
     )
     
     // 注册成功后跳转

@@ -68,20 +68,20 @@
 
       <div class="divider">
         <div class="divider-line"></div>
-        <span class="divider-text">或使用邮箱注册</span>
+        <span class="divider-text">或使用其他方式登录</span>
         <div class="divider-line"></div>
       </div>
 
       <!-- Form -->
       <!-- 绑定提交事件 -->
-      <form @submit.prevent="handleSubmit">
+      <form @submit.prevent="handLeSubmit">
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">姓名</label>
+            <label class="form-label">姓名/邮箱</label>
             <div class="input-wrapper">
               <!-- v-model 绑定姓名 -->
               <input 
-                v-model="form.name" 
+                v-model="form.account" 
                 type="text" 
                 class="form-input" 
                 placeholder="你的名字"
@@ -149,7 +149,7 @@ const authStore = useAuthStore()
 
 // 表单数据
 const form = ref({
-  name: '',
+  account: '',
   password: '',
 })
 
@@ -183,32 +183,49 @@ const floatCards = [
 // 密码强度计算 (移植自您的原始代码逻辑)
 
 
-// 提交处理 (对接您的接口逻辑)
-const handleSubmit = async () => {
-  if (!agreed.value) {
+
+  
+
+
+const handLeSubmit = async ()=>{
+    if (!form.value.account.trim()){    //trim()去除输入两端的空格，避免用户输入空格导致的错误
+        errorMsg.value='请输入用户名或邮箱'
+        return
+    }
+    if(!form.value.password){
+        errorMsg.value='请输入密码'
+        return
+    }
+
+    loading.value=true      // 开始登录，显示加载状态
+    errorMsg.value=''
+
+    if (!agreed.value) {
     errorMsg.value = '请先同意服务条款和隐私政策'
     return
-  }
+    }
 
-  loading.value = true
-  errorMsg.value = ''
   
-  try {
-    // 调用 authStore 的注册方法
-    // 注意：您的 store 接口参数需要对应，这里假设 register 接受一个对象
-    await authStore.login(
-        form.value.name, // 将 name 映射为 username
-       form.value.password
-      // language 可以根据后端需求决定是否发送
-    )
-    console.log('登录成功！')
-    // 注册成功后跳转
-    router.push('/') 
-  } catch (err) {
-    errorMsg.value = err.response?.data?.detail || '登录失败，请稍后重试'
-  } finally {
-    loading.value = false
-  }
+    const isEmail = form.value.account.includes('@')
+    const payload ={
+        password: form.value.password
+    }
+    if(isEmail){
+        payload.email = form.value.account
+    }
+    else{
+        payload.username = form.value.account
+    }
+
+    try{
+        await authStore.login(payload)
+        console.log('登录成功！')
+        router.push('/')
+    }catch(err){
+        errorMsg.value = err.response?.data?.detail || '登录失败，请检查你的账号和密码'
+    }finally{
+        loading.value=false     // 登录完成，重置加载状态
+    }
 }
 </script>
 

@@ -8,6 +8,19 @@ export interface User {
     email :string
     is_active :boolean
 }
+export interface LoginCredentials{
+    username?:string
+    email?:string
+    password:string
+}//新增一个登录凭证接口
+
+export interface RegisterCredentials{
+    username?:string
+    email?:string
+    password:string
+}
+
+
 
 export const useAuthStore = defineStore('auth',() =>{
     const token = ref<string>(localStorage.getItem('access_token')||'')
@@ -31,20 +44,18 @@ export const useAuthStore = defineStore('auth',() =>{
     setAuthHeader()
 
     //注册
-    async function register(username:string,email:string,password:string){
-        const {data}= await apiClient.post('/auth/register',{
-            username,
-            email,
-            password,
-        })
+    async function register(credrntials:RegisterCredentials){
+        const {data}= await apiClient.post('/auth/register',
+            credrntials
+        )
         return data
     }
 
     //登录
-    async function login(username:string,password:string){
-        const {data} = await apiClient.post('/auth/login',null,{
-            params:{username,password},
-        })
+    async function login(credentials: LoginCredentials){
+        const {data} = await apiClient.post('/auth/login',
+            credentials
+        )
         token.value = data.access_token
         localStorage.setItem('access_token',token.value)
         setAuthHeader()
