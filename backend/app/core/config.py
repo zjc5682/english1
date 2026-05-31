@@ -8,7 +8,7 @@ class Settings(BaseSettings):
     )
     
     PROJECT_NAME: str = "English Learning API"
-    DATABASE_URL: str = "mysql+pymysql://张钧城:zjc123456@localhost:3306/zhan"
+    DATABASE_URL: str = "sqlite:///./app.db"
     SECRET_KEY: str = "change-me-to-a-random-secret"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
 

@@ -49,7 +49,7 @@ def login(credentials:UserCreate,session:Session = Depends(get_session)):
         )
     ).first()#根据用户名或邮箱查询用户对象
     if not user or not verify_password(credentials.password,user.hashed_password):
-        raise HTTPException(status_code=401,detail="用户名或密码错误")
+        raise HTTPException(status_code=401,detail="用户名或密码错误")  #如果用户不存在或密码验证失败，抛出401未授权错误
     access_token = create_access_token(data={"sub":user.username})#创建一个JWT访问令牌，包含用户的用户名作为主题
     return{"access_token":access_token,"token_type":"bearer"}   #返回访问令牌和令牌类型，供前端使用
 
