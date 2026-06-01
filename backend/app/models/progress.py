@@ -10,7 +10,7 @@ if TYPE_CHECKING: #TYPE_CHECKING是一个特殊的常量，在类型检查时为
     # primary_key=True表示该字段是主键，foreign_key参数指定了外键关系，
     # index=True表示为该字段创建索引以提高查询性能
 class UserWordProgress(SQLModel, table =True):
-    __table_args__=(UniqueConstraint("user_id","word_id",name="uix_user_word")) #添加唯一约束，确保同一用户对同一单词的进度记录唯一
+    __table_args__=(UniqueConstraint("user_id","word_id",name="uq_user_word"),) #添加唯一约束，确保同一用户对同一单词的进度记录唯一
     
     id: Optional[int] = Field(default=None,primary_key=True)
     user_id:int = Field(foreign_key="user.id",index=True)
